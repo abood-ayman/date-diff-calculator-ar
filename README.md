@@ -1,27 +1,26 @@
-# الفرق بين تاريخين
+# Date Difference Calculator | الفرق بين تاريخين
 
-كم يومًا بين تاريخين؟ وماذا يكون التاريخ بعد ٩٠ يومًا؟
+Count the days, weeks and months between two dates, see the weekday of each, and add or subtract days from any date. Arabic interface.
 
-**رابط الأداة (تعمل فورًا من المتصفح):** https://abood-ayman.github.io/date-diff-calculator-ar/
+**Live app:** https://abood-ayman.github.io/date-diff-calculator-ar/
 
-## ما الذي تقدمه؟
+![Date Difference Calculator, mobile view](docs/screenshot.svg)
 
-- الفرق بالأيام الكلية وبالأسابيع وبالسنوات والشهور والأيام
-- يوم الأسبوع لكل تاريخ تختاره
-- إضافة أو طرح عدد من الأيام على أي تاريخ (مفيد للعقود والمواعيد النهائية)
+This is a personal project, built with AI tools.
 
-## الخصوصية
+## Features
+- Difference in total days, weeks, and years/months/days
+- Weekday of each date you pick
+- Add or subtract days from a date (useful for contracts and deadlines)
 
-تعمل الأداة بالكامل داخل متصفحك (HTML/CSS/JavaScript فقط). لا يوجد خادم، ولا حسابات، ولا تتبّع، ولا تُرسل أو تُحفظ أي بيانات تدخلها خارج جهازك.
+## Privacy
+Everything runs in your browser. No data is stored or sent anywhere.
 
-## التقنية
+## Run locally
+Open `index.html` in any browser. It is a single static page with no dependencies.
 
-صفحة ثابتة واحدة بلا أي مكتبات خارجية، تعمل على الهاتف والحاسوب، وتُستضاف مجانًا عبر GitHub Pages.
+## Status
+Stable.
 
-## ملاحظة شفافية
-
-بُنيت هذه الأداة بمساعدة أدوات ذكاء اصطناعي، ورُوعيَت بساطتها وفائدتها المباشرة.
-
-## الرخصة
-
-MIT — انظر ملف LICENSE.
+## Copyright
+MIT License - Copyright (c) 2026 Abdullah Ayman.
