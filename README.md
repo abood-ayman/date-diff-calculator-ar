@@ -4,6 +4,8 @@ Count the days, weeks and months between two dates, see the weekday of each, and
 
 **Live app:** https://abood-ayman.github.io/date-diff-calculator-ar/
 
+**LinkedIn:** [Project entry](https://www.linkedin.com/in/abdullah-ayman-1678b737b/details/projects/)
+
 ![Date Difference Calculator, mobile view](docs/screenshot.svg)
 
 This is a personal project, built with AI tools.
