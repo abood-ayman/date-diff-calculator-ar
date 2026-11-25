@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حاسبة الفرق بين تاريخين | أداة مجانية</title>
+<meta name="description" content="احسب عدد الأيام والأسابيع والشهور بين تاريخين، ويوم الأسبوع لكل تاريخ، وأضف أو اطرح أيامًا من أي تاريخ. دون إرسال بيانات.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,'Segoe UI',Arial,sans-serif;background:#f1f5f9;color:#1e293b;line-height:1.7;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;padding:1.6rem 1rem;text-align:center}
+header h1{font-size:1.5rem}
+.tagline{opacity:.92;font-size:.95rem;margin-top:.25rem}
+main{flex:1;width:100%;max-width:560px;margin:0 auto;padding:1rem}
+.card{background:#fff;border-radius:14px;padding:1.25rem;box-shadow:0 1px 4px rgba(15,23,42,.08);margin-bottom:1rem}
+.card h2{font-size:1.1rem;margin-bottom:.4rem;color:#0f766e}
+label{display:block;font-weight:700;margin:.75rem 0 .3rem}
+input,select,textarea{width:100%;padding:.7rem .8rem;border:1.5px solid #cbd5e1;border-radius:10px;font-size:1rem;font-family:inherit;background:#fff;color:#1e293b}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#0f766e;box-shadow:0 0 0 3px rgba(20,184,166,.18)}
+.row{display:flex;gap:.6rem}
+.row>*{flex:1;min-width:0}
+button{display:inline-block;width:100%;padding:.8rem;border:0;border-radius:10px;background:#0f766e;color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:1rem}
+button:hover{background:#115e59}
+button.ghost{background:#e2e8f0;color:#1e293b}
+.result{background:#ecfdf5;border:1.5px solid #6ee7b7;border-radius:10px;padding:1rem;margin-top:1rem;font-size:1.05rem;word-break:break-word}
+.result b{color:#047857}
+.result.warn{background:#fffbeb;border-color:#fcd34d}
+.result.warn b{color:#b45309}
+.result.bad{background:#fef2f2;border-color:#fca5a5}
+.result.bad b{color:#b91c1c}
+.muted{color:#64748b;font-size:.85rem}
+footer{background:#0f172a;color:#94a3b8;text-align:center;padding:1.2rem 1rem;font-size:.85rem;line-height:1.9}
+footer a{color:#5eead4}
+table{width:100%;border-collapse:collapse;margin-top:.5rem}
+th,td{padding:.5rem;border-bottom:1px solid #e2e8f0;text-align:right;font-size:.95rem}
+.big{font-size:1.6rem;font-weight:800}
+.hidden{display:none}
+.chk{display:flex;align-items:center;gap:.5rem;margin:.3rem 0}
+.chk input{width:auto}
+
+</style>
+</head>
+<body>
+<header>
+<h1>الفرق بين تاريخين</h1>
+<p class="tagline">كم يومًا بين تاريخين؟ وماذا يكون التاريخ بعد ٩٠ يومًا؟</p>
+</header>
+<main>
+<div class="card">
+<h2>الفرق بين تاريخين</h2>
+<div class="row">
+<div>
+<label for="d1">من تاريخ</label>
+<input type="date" id="d1">
+</div>
+<div>
+<label for="d2">إلى تاريخ</label>
+<input type="date" id="d2">
+</div>
+</div>
+<button onclick="calcDiff()">احسب الفرق</button>
+<div id="out1" class="result hidden"></div>
+</div>
+<div class="card">
+<h2>أضف أو اطرح أيامًا</h2>
+<div class="row">
+<div>
+<label for="d3">التاريخ</label>
+<input type="date" id="d3">
+</div>
+<div>
+<label for="n">عدد الأيام (سالب للطرح)</label>
+<input type="number" inputmode="numeric" id="n" placeholder="90">
+</div>
+</div>
+<button class="ghost" onclick="calcAdd()">احسب التاريخ</button>
+<div id="out2" class="result hidden"></div>
+</div>
+
+</main>
+<footer>
+<p>تعمل هذه الأداة بالكامل على جهازك، ولا تُحفظ أو تُرسل أي بيانات إلى أي خادم.</p>
+<p>أداة مجانية مفتوحة المصدر · بُنيت بمساعدة أدوات ذكاء اصطناعي · <a href="https://github.com/abood-ayman/date-diff-calculator-ar">الكود على GitHub</a></p>
+</footer>
+<script>
+window.__jserrors=[];window.addEventListener('error',function(e){window.__jserrors.push(String(e.message))});
+const g = id => document.getElementById(id);
+
+function daysBetween(a, b) {
+  return Math.round((Date.UTC(b.getFullYear(), b.getMonth(), b.getDate()) - Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())) / 86400000);
+}
+function ymd(a, b) {
+  if (daysBetween(a, b) < 0) { const t = a; a = b; b = t; }
+  let y = b.getFullYear() - a.getFullYear();
+  let m = b.getMonth() - a.getMonth();
+  let d = b.getDate() - a.getDate();
+  let mo = b.getMonth(), yr = b.getFullYear();
+  while (d < 0) { m--; mo--; if (mo < 0) { mo = 11; yr--; } d += new Date(yr, mo + 1, 0).getDate(); }
+  if (m < 0) { y--; m += 12; }
+  return { y, m, d };
+}
+function addDays(dt, n) {
+  const r = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  r.setDate(r.getDate() + n);
+  return r;
+}
+const weekday = d => new Intl.DateTimeFormat('ar-EG', { weekday: 'long' }).format(d);
+const fullDate = d => new Intl.DateTimeFormat('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+const parseD = id => { const v = g(id).value; return v ? new Date(v + 'T00:00:00') : null; };
+
+function calcDiff() {
+  const a = parseD('d1'), b = parseD('d2');
+  const el = g('out1');
+  el.classList.remove('hidden');
+  if (!a || !b) { el.innerHTML = '<p>اختر التاريخين.</p>'; return; }
+  const days = Math.abs(daysBetween(a, b));
+  const c = ymd(a, b);
+  el.innerHTML =
+    '<p class="big">الفرق: <b>' + days.toLocaleString('ar-EG') + ' يوم</b></p>' +
+    '<p>أي: <b>' + c.y + ' سنة و ' + c.m + ' شهرًا و ' + c.d + ' يومًا</b></p>' +
+    '<p>أو: <b>' + Math.floor(days / 7) + ' أسبوعًا و ' + days % 7 + ' يومًا</b></p>' +
+    '<p>' + weekday(a) + ' ← ' + fullDate(a) + '<br>' + weekday(b) + ' ← ' + fullDate(b) + '</p>';
+}
+
+function calcAdd() {
+  const a = parseD('d3'), n = parseInt(g('n').value, 10);
+  const el = g('out2');
+  el.classList.remove('hidden');
+  if (!a || isNaN(n)) { el.innerHTML = '<p>أدخل التاريخ وعدد الأيام.</p>'; return; }
+  const r = addDays(a, n);
+  el.innerHTML = '<p class="big"><b>' + weekday(r) + ' ' + fullDate(r) + '</b></p>';
+}
+
+window.__test = function () {
+  const d1 = daysBetween(new Date(2024, 0, 1), new Date(2024, 11, 31));
+  const d2 = daysBetween(new Date(2025, 0, 1), new Date(2025, 0, 31));
+  const c = ymd(new Date(2025, 0, 15), new Date(2026, 2, 20));
+  const r1 = addDays(new Date(2024, 11, 31), 1);
+  const r2 = addDays(new Date(2025, 0, 1), -1);
+  const ok = d1 === 365 && d2 === 30 &&
+             c.y === 1 && c.m === 2 && c.d === 5 &&
+             r1.getFullYear() === 2025 && r1.getMonth() === 0 && r1.getDate() === 1 &&
+             r2.getFullYear() === 2024 && r2.getMonth() === 11 && r2.getDate() === 31;
+  return { pass: ok, details: { d1, d2, c, r1: r1.toString(), r2: r2.toString() } };
+};
+
+window.__demo = function () {
+  g('d1').value = '2026-01-01'; g('d2').value = '2026-11-25'; calcDiff();
+  g('d3').value = '2026-11-25'; g('n').value = 90; calcAdd();
+};
+
+</script>
+</body>
+</html>
